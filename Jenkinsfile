@@ -4,6 +4,9 @@ pipeline {
             label 'maven'
         }
     }
+environment {
+    PATH = "/opt/maven/latest/bin:$PATH"
+}
 
     stages {
         stage("build"){
