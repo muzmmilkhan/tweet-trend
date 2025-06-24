@@ -4,26 +4,25 @@ pipeline {
             label 'maven'
         }
     }
-environment {
-    PATH = "/opt/maven/latest/bin:$PATH"
-}
+
+    environment {
+        PATH = "/opt/maven/latest/bin:$PATH"
+        scannerHome = tool 'SonarScanner'
+    }
+
     stages {
-        stage('build'){
-            steps{
+        stage('Build') {
+            steps {
                 sh 'mvn clean deploy'
             }
+        }
 
-        }
-        stage('SonarQube Analysis'){
-        environment {
-            scannerHome = tool 'SonarScanner'
-        }
-            steps{
-                withSonarQubeEnv('sonarqube-server'){
-                    sh "${scannerHome}/bin/sonar-scanner"
+        stage('SonarCloud Analysis') {
+            steps {
+                withCredentials([string(credentialsId: 'sonar-Cred', variable: 'SONAR_TOKEN')]) {
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.login=$SONAR_TOKEN"
                 }
             }
-
         }
     }
 }
