@@ -16,10 +16,10 @@ environment {
         }
         stage('SonarQube Analysis'){
         environment {
-            scannaerhome = tool "sonarqube-scanner"
+            scannaerhome = tool "wipro-sonar-scanner"
         }
             steps{
-                withSonarQubeEnv("sonarqube-scanner"){
+                withSonarQubeEnv("wipro-sonar-scanner"){
                     sh "${scannaerhome}/bin/sonar-scanner"
                 }
             }
