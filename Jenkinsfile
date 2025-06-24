@@ -19,7 +19,7 @@ environment {
             scannerHome = tool 'SonarScanner'
         }
             steps{
-                withSonarQubeEnv('SonarQubeServer'){
+                withSonarQubeEnv('sonarqube-server'){
                     sh "${scannerHome}/bin/sonar-scanner"
                 }
             }
